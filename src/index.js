@@ -17,9 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
 const toyCollection = document.querySelector('#toy-collection')
 const btnClass = document.getElementsByClassName("like-btn")
 const newToyBtn = document.querySelector('#new-toy-btn')
-const addToyForm = document.getElementsByClassName("add-toy-form")
+const addToyForm = document.getElementsByClassName("add-toy-form")[0]
 
+console.log( document.getElementsByClassName("add-toy-form"))
+console.log( document.querySelectorAll(".add-toy-form"))
 fetch("http://localhost:3000/toys")
+
 .then(response=>response.json())
 .then(response=>response.forEach(toy=>createCard(toy)))
 
@@ -36,7 +39,7 @@ newh2.textContent = toy.name
 newDiv.appendChild(newh2)
 
 const imgToy =document.createElement('img')
-console.log(toy.image)
+
 imgToy.src = toy.image
 
 imgToy.className ='toy-avatar'
@@ -56,14 +59,21 @@ newDiv.appendChild(newBtn)
 newBtn.addEventListener('click', event =>patchToy(event))
 }
 
-
+console.log(addToyForm)
 addToyForm.addEventListener('submit', event=> postToy(event))
 
 
 
 function postToy(event){
-  let newToyName = addToyForm[1].value
-  let newToyImg = addToyForm[2].value
+  event.preventDefault();
+
+  console.log('hellow world')
+
+  let newToyName = addToyForm.name.value
+  let newToyImg = addToyForm.image.value
+
+console.log(newToyName)
+console.log(newToyImg)
 
 fetch("http://localhost:3000/toys",{
   method:'POST',
@@ -83,7 +93,7 @@ body: JSON.stringify(
 ) 
                                     })  // end of fetch and 2nd parameter function
 
-}     //end of function postToy
+ }     //end of function postToy
 
 function patchToy(event) {
   event.preventDefault();  
